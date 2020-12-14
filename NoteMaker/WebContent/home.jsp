@@ -13,6 +13,8 @@
 
 	<div class="container">
 		<%@include file="header.jsp"%>
+		<img src="notes.png" class="img-fluid" alt="...">
+	
 	</div>
 </body>
 </html>

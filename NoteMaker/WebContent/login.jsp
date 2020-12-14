@@ -10,6 +10,7 @@
 </head>
 <body>
 <div class="container ">
+<%@include file="header.jsp"%>
 		<h3>Resister Here !!!!</h3>
 		<div class="row ">
   <div class="col-sm-6">
@@ -39,6 +40,9 @@
     <div class="card  bg-secondary">
       <div class="card-body">
         <h5 class="card-title ">SignUp</h5>
+        <%
+        out.print(request.getAttribute("flag"));
+        %>
         <form class="form-control" action="Register" method="post">
 			  <div class="mb-1  ">
 			  <label for="exampleFormControlInput1" class="form-label">Name</label>

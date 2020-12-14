@@ -22,12 +22,18 @@
 	<div class="container">
 		<%@include file="header.jsp"%>
 		<h1 class="text-uppercase">ALL Note</h1>
+			<%
+						String s = (String)session.getAttribute("id");
+			int i = Integer.parseInt(s);
+			out.print(i);
+					%>
+					
 		<%
 		
 	try{
 		Connection con = Database.getConnection();
 		Statement st = con.createStatement();
-		ResultSet rs = st.executeQuery("select *from note");
+		ResultSet rs = st.executeQuery("select *from note where userid ="+i);
 		while(rs.next())
 		{
 		
@@ -38,9 +44,10 @@
 			  <div class="col-sm-8">
 			    
 						  <div class="card text-black  mb-3" style="max-width: 100rem;  ">
-						  <div class="card-header"><%=rs.getString(2) %></div>
+						  <div class="card-header">Title <%=rs.getString(2) %> &nbsp &nbsp  created   <%=rs.getTimestamp(5) %></div>
 						  <div class="card-body">
 						    <h5 class="card-title"><%=rs.getString(3) %></h5>
+						     <h5 class="card-title"></h5>
 			   
 			  </div>
 			  </div>

@@ -12,15 +12,22 @@
 
 </head>
 <body>
+		
 	
 		<%@include file="header.jsp"%>
+	<%if(flag){%>
 		<div class="container-fluid ">
 		<br><br>
 		<form action="AddNote" method="post">
 			<div class="mb-3">
 				<label for="exampleInputEmail1" class="form-label">ADD TITLE</label> <input type="text" class="form-control" id="content"
 					name="content" aria-describedby="emailHelp">
-				
+					<%
+						String s =	(String)session.getAttribute("id");
+						out.print(s);
+					%>
+				<input type="hidden" class="form-control" id="content"
+					name="userId" aria-describedby="emailHelp" value ="<%=s%>">
 			</div>
 			<div class="mb-3">
 				<label for="exampleInputPassword1" class="form-label">Note</label>
@@ -32,7 +39,7 @@
 			</div>
 
 		</form>
-	</div>
+	</div><%} else response.sendRedirect("login.jsp"); %>
 	<script type="text/javascript">
 	$('#summernote').summernote({
 		  toolbar: [

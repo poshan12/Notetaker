@@ -14,8 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.SendResult;
-import javax.websocket.Session;
+
 
 import com.all.bean.ResisterBean;
 import com.connect.Database;
@@ -36,26 +35,36 @@ public class Register extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-			String id = req.getParameter("email");
+			String email = req.getParameter("email");
 			String pwd = req.getParameter("pwd");
-		//	System.out.println(name+" "+pwd);
+		System.out.println(email+" "+pwd);
 			
 			try {
-				Connection con1 = Database.getConnection();
-				Statement st = con1.createStatement();
-				  String sql = "SELECT id FROM noteregister where email='"+id+"' and pwd='"+pwd+"' ";
-
-				ResultSet rs = st.executeQuery(sql);
+				Connection con = Database.getConnection();
+				Statement st = con.createStatement();
+				ResultSet rs = st.executeQuery("select * from noteregister where email='"+email+"' and pwd='"+pwd+"'");
 				while(rs.next())
 				{
 					HttpSession s = req.getSession();
-					s.setAttribute("id", "rs.getString(1)");
+					s.setAttribute("id", rs.getString(1));
 					resp.sendRedirect("home.jsp");
+					
 				}
+					System.out.println(rs.getString(1));
+//				Statement st = con1.createStatement();
+//				  String sql = "SELECT id FROM noteregister where email='"+email+"' and pwd='"+pwd+"' ";
+//
+//				ResultSet rs = st.executeQuery(sql);
+//				while(rs.next())
+//				{
+//					HttpSession s = req.getSession();
+//					s.setAttribute("id", "rs.getString(1)");
+//					resp.sendRedirect("home.jsp");
+//				}
 				
 				
-			} catch (Exception e) {
-				// TODO: handle exception
+			} catch (SQLException e) {
+				System.out.println("message "+e.getMessage());
 			}
 	}
 
@@ -87,10 +96,11 @@ public class Register extends HttpServlet {
 			ps.setString(4, rs.getPhone());
 			ps.setString(5, rs.getAddress());
 			ps.setString(6, rs.getPwd());
-			boolean flag =ps.execute();
+			ps.execute();
+			response.sendRedirect("login.jsp");
 				
 		} catch (SQLException e) {
-			System.out.print(e.getMessage());
+			System.out.print("dfjdkjf "+e.getMessage());
 		}
 				
 	}
